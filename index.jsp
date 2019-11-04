@@ -11,7 +11,7 @@
 <>
 
 <div class="header block">
-  <span class="header"> Демичев Даниил Дмитриевич<br> Группа P3213 <br> Вариант: 213003</span>
+  <span class="header"> Демичев Даниил Дмитриевич<br> Группа P3213 <br> Вариант: 213100</span>
 </div>
 <div class="block" id="result_container">
 <div class="info">
@@ -21,29 +21,32 @@
 <div class=" result_data" id="result_data">Hu? </div>
 </div>
 <div class="block input">
-  <form action="control" method="get">
+  <form method="get">
     Выберите X:
-    <input type="radio" checked="checked" name="x" value="-5">-5
-    <input type="radio" name="x" value="-4">-4
-    <input type="radio" name="x" value="-3">-3
-    <input type="radio" name="x" value="-2">-2
-    <input type="radio" name="x" value="-1">-1
-    <input type="radio" name="x" value="0">0
-    <input type="radio" name="x" value="1">1
-    <input type="radio" name="x" value="2">2
-    <input type="radio" name="x" value="3">3
+    <button class="buttonx" type="button" value="-5" onclick="buttonParsing(this, 'x')">-5</button>
+    <button class="buttonx" type="button" value="-4" onclick="buttonParsing(this, 'x')">-4</button>
+    <button class="buttonx" type="button" value="-3" onclick="buttonParsing(this, 'x')" >-3</button>
+    <button class="buttonx" type="button" value="-2" onclick="buttonParsing(this, 'x')">-2</button>
+    <button class="buttonx" type="button" value="-1" onclick="buttonParsing(this, 'x')">-1</button>
+    <button class="buttonx" type="button" value="0" onclick="buttonParsing(this, 'x')">0</button>
+    <button class="buttonx" type="button" value="1" onclick="buttonParsing(this, 'x')">1</button>
+    <button class="buttonx" type="button" value="2" onclick="buttonParsing(this, 'x')">2</button>
+    <button class="buttonx" type="button" value="3" onclick="buttonParsing(this, 'x')">3</button>
     <br>
+    <input type="hidden" name="x" id="hiddenx">
     Введите Y:
-    <input type="text"  placeholder="-3..5" name="y" >
+    <input id="posy" type="text"  placeholder="-5..3" name="y" >
     <br>
     Выберите R:
-    <input type="checkbox" name="r" value="1">1
-    <input type="checkbox" name="r" value="1.5">1.5
-    <input type="checkbox" name="r" value="2">2
-    <input type="checkbox" name="r" value="2.5">2.5
-    <input type="checkbox" name="r" value="3">3
+    <button class="buttonr" type="button"  value="1" onclick="buttonParsing(this, 'r')">1</button>
+    <button class="buttonr" type="button"  value="2" onclick="buttonParsing(this, 'r')">2</button>
+    <button class="buttonr" type="button" value="3" onclick="buttonParsing(this, 'r')">3</button>
+    <button class="buttonr" type="button"  value="4" onclick="buttonParsing(this, 'r')">4</button>
+    <button class="buttonr" type="button"  value="5" onclick="buttonParsing(this, 'r')">5</button>
     <br>
+    <input type="hidden" name="r" id="hiddenr">
     <input type="submit" id="submit">
+    <input type="button" value="click me" onclick="alert(document.getElementById('hiddenx').value + document.getElementById('hiddenr').value)">
   </form>
   <br>
   <span id="error"></span>
@@ -74,18 +77,18 @@
 
 
       plot_context.beginPath();
-      plot_context.arc(180, 180, R * 150 / 10,  Math.PI, Math.PI * 1.5);
+      plot_context.arc(180, 180, R * 300 / 10,  Math.PI, Math.PI * 1.5);
       plot_context.lineTo(180, 180);
       plot_context.closePath();
 
-      plot_context.rect(180 - R * 150 / 5, 180, R * 150 / 5, R * 75 / 5);
+      plot_context.rect(180 - R * 150 / 5, 180, R * 150 / 5, R * 150 / 5);
       plot_context.fillStyle = 'blue';
       plot_context.fill();
 
       plot_context.beginPath();
       plot_context.moveTo(180, 180);
-      plot_context.lineTo(180, 180 + R * 75 / 5);
-      plot_context.lineTo(180 + R * 150 / 5, 180);
+      plot_context.lineTo(180, 180 - R * 75 / 5);
+      plot_context.lineTo(180 + R * 75 / 5, 180);
       plot_context.lineTo(180, 180);
       plot_context.closePath();
       plot_context.fillStyle = 'blue';

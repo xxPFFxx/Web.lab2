@@ -25,9 +25,9 @@ public class AreaCheckServlet extends HttpServlet {
 
     }
     public static boolean inside(double x, double y, double r){
-        return x<=0 && y>=0 && x*x+y*y<=(r/2)*(r/2)  ||
-                x>=0 && y<=0 && y >= (x-r)/2 ||
-                x<=0 && y<=0 && y>=(-r/2) && x >= (-r);
+        return x<=0 && y>=0 && x*x+y*y<=r*r  ||
+                x>=0 && y<=0 && y >= r/2-x ||
+                x<=0 && y<=0 && y>=-r && x >= -r;
     }
 }
 class RequestParser{
@@ -49,7 +49,7 @@ class RequestParser{
 
     public double getR() throws NumberFormatException{
         double doubleR = Double.parseDouble(request.getParameter("r"));
-        if(doubleR >= 1.0 && doubleR <= 3.0)
+        if(doubleR >= 1.0 && doubleR <= 5.0)
             return doubleR;
         throw new NumberFormatException();
     }
@@ -57,7 +57,7 @@ class RequestParser{
 
     public double getY() throws NumberFormatException{
         double doubleY = Double.parseDouble(request.getParameter("y"));
-        if (doubleY >= -3.0 && doubleY <= 5.0)
+        if (doubleY >= -5.0 && doubleY <= 3.0)
             return doubleY;
 
         throw new NumberFormatException();
@@ -84,11 +84,11 @@ class RequestParser{
     }
 
     public static boolean validY(double y){
-        return y <= 5.0 && y>= -3.0;
+        return y <= 3.0 && y>= -5.0;
     }
 
     public static boolean validR(double r){
-        return r <= 3.0 && r >= 1.0;
+        return r <= 5.0 && r >= 1.0;
     }
 }
 
