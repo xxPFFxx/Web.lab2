@@ -16,6 +16,8 @@ public class AreaCheckServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html; charset=UTF-8");
         req.setCharacterEncoding("UTF-8");
+        ServletContext context = getServletContext();
+
         PrintWriter out = resp.getWriter();
         RequestParser parser = new RequestParser(req);
         double x,y,r;
@@ -24,11 +26,12 @@ public class AreaCheckServlet extends HttpServlet {
         y = parser.getY();
         r = parser.getR();
         if (inside(x,y,r)) result = "Попал"; else result = "Не попал";
-        out.println("<tr><td>" + x + "</td><td>" + y + "</td><td>" + r + "</td><td>" + result + "</td></tr><br>");
+        context.setAttribute("result", "<tr><td>" + x + "</td><td>" + y + "</td><td>" + r + "</td><td>" + result + "</td></tr><br>");
+        out.println(context.getAttribute("result"));
     }
     public static boolean inside(double x, double y, double r){
         return x<=0 && y>=0 && x*x+y*y<=r*r  ||
-                x>=0 && y<=0 && y >= r/2-x ||
+                x>=0 && y>=0 && y <= r/2-x ||
                 x<=0 && y<=0 && y>=-r && x >= -r;
     }
 }

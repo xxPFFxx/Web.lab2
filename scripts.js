@@ -30,6 +30,21 @@
         document.getElementById('hidden' + par).value = button.value;
         unchosen(button.className);
         button.classList.add('chosen');
+        if (par == 'r' && validateR()){
+            redraw();
+        }
+    }
+    function validateR() {
+        let r = document.getElementById("hiddenr").value;
+        if (document.getElementById("hiddenr").value.length == 0 || isNaN(r)) {
+            document.getElementById("error").textContent = "R должен быть числом";
+            return false
+        } else if (r < 1 || r > 5) {
+            document.getElementById("error").textContent = "R должен находиться от 1 до 5";
+            return false
+        } else {
+            return true;
+        }
     }
 function validate() {
     if (document.getElementById("posy").value.search(",") != -1) {
