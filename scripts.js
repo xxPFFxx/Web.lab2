@@ -44,31 +44,35 @@ function validate() {
         let tmp = document.getElementById("hiddenr").value.replace(",", ".");
         document.getElementById("hiddenr").value = tmp;
     }
-    let y = this.y.value;
-    let x = this.x.value;
-    let r = this.r.value;
+    let y = document.getElementById("posy").value;
+    let x = document.getElementById("hiddenx").value;
+    let r = document.getElementById("hiddenr").value;
     if (document.getElementById("posy").value.length == 0 || isNaN(y)) {document.getElementById("error").textContent = "Y должен быть числом"; return false}
+
     else if (y<-5 || y>3){
         document.getElementById("error").textContent = "Y должен находиться от -5 до 3"; return false
     }
     else if (document.getElementById("hiddenx").value.length == 0 || isNaN(x)) {document.getElementById("error").textContent = "X должен быть числом"; return false}
+
     else if (x<-5 || x>3){
         document.getElementById("error").textContent = "X должен находиться от -5 до 3"; return false
     }
     else if (document.getElementById("hiddenr").value.length == 0 || isNaN(r)) {document.getElementById("error").textContent = "R должен быть числом"; return false}
+
     else if (r<1 || r>5){
-        alert(r);
         document.getElementById("error").textContent = "R должен находиться от 1 до 5"; return false
     }
     else {
-        document.getElementById("div-result").style.display = "block";
         document.getElementById("error").textContent = "";
+        sendAjax();
         return true;}
 }
-function check() {
-    var request = new ajaxRequest();
-    var ajaxY = document.querySelector("input[type=text]").value;
-    request.open("GET", "control?ajaxy=" + ajaxY, true);
+function sendAjax() {
+    let request = new ajaxRequest();
+    let ajaxY = document.getElementById("posy").value;
+    let ajaxX = document.getElementById("hiddenx").value;
+    let ajaxR = document.getElementById("hiddenr").value;
+    request.open("GET", "control?y=" + ajaxY + "&x=" + ajaxX + "&r=" + ajaxR, true);
     request.onreadystatechange = function()
     {
         if (this.readyState == 4)
@@ -77,7 +81,7 @@ function check() {
             {
                 if (this.responseText != null)
                 {
-                    document.getElementById('error').textContent =
+                    document.querySelector('table').innerHTML +=
                         this.responseText
                 }
                 else alert("Ошибка AJAX: Данные не получены ")

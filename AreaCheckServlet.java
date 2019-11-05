@@ -14,15 +14,17 @@ import java.util.Map;
 @WebServlet("/check")
 public class AreaCheckServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html; charset=UTF-8");
+        req.setCharacterEncoding("UTF-8");
         PrintWriter out = resp.getWriter();
         RequestParser parser = new RequestParser(req);
         double x,y,r;
+        String result;
         x = parser.getX();
         y = parser.getY();
         r = parser.getR();
-        if (inside(x,y,r)) out.println("Inside");
-        else out.println("really?");
-
+        if (inside(x,y,r)) result = "Попал"; else result = "Не попал";
+        out.println("<tr><td>" + x + "</td><td>" + y + "</td><td>" + r + "</td><td>" + result + "</td></tr><br>");
     }
     public static boolean inside(double x, double y, double r){
         return x<=0 && y>=0 && x*x+y*y<=r*r  ||

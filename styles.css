@@ -62,6 +62,7 @@ input{
     width: 250px;
     height: 360px;
     float: right;
+    overflow: auto;
 }
 #result_container{
     height: 360px;
@@ -69,4 +70,9 @@ input{
 }
 .chosen{
     background-color: blue;
+}
+table {border: 1px solid grey;}
+td{
+    padding: 3px;
+
 }

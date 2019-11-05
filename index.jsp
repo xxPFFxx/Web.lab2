@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +18,7 @@
   <canvas height="360px" width="360px" id="zoneCanvas"></canvas>
 
 </div>
-<div class=" result_data" id="result_data">Hu? </div>
+<div class=" result_data" id="result_data"><table><tr><th>X</th><th>Y</th><th>R</th><th>Результат</th></tr></table></div>
 </div>
 <div class="block input">
   <form method="get">
@@ -45,26 +45,17 @@
     <button class="buttonr" type="button"  value="5" onclick="buttonParsing(this, 'r')">5</button>
     <br>
     <input type="hidden" name="r" id="hiddenr">
-    <input type="submit" id="submit">
-    <input type="button" value="click me" onclick="alert(document.getElementById('hiddenx').value + document.getElementById('hiddenr').value)">
+    <button type="button" id="submit" >Отправить</button>
   </form>
   <br>
   <span id="error"></span>
-</div>
-<div align="center" class="block" id="div-result" style="display: none">
-  <iframe id="result" name="result" scrolling="no" frameborder="no" ></iframe>
 </div>
 <div class="footer block">
   2019 г.
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
-  document.querySelector("form").onsubmit=validate;
-  var tmr;
- /* document.querySelector("input[type=text]").onkeyup = function() {
-    clearTimeout(tmr);
-    tmr = setTimeout(check,1000);
-  }; */
+  document.querySelector("#submit").onclick=validate;
   var plot_canvas = document.getElementById("zoneCanvas");
   var plot_context = plot_canvas.getContext("2d");
   redraw();
