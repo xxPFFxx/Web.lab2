@@ -55,6 +55,17 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
+  document.getElementById("zoneCanvas").addEventListener("click", function (e) {
+    if(validateR()) {
+      const x = Number(((e.x - document.getElementById("zoneCanvas").getBoundingClientRect().left - 180) / (30)).toFixed(2));
+      const y = Number(((e.y - document.getElementById("zoneCanvas").getBoundingClientRect().top - 180) / (-30)).toFixed(2));
+      sendAjaxGraph(x,y,document.getElementById("hiddenr").value);
+      document.getElementById("error").textContent = "";
+    }
+    else {
+      document.getElementById("error").textContent = "Для отправки точки с картинки установите корректный радиус";
+    }
+  });
   document.querySelector("#submit").onclick=validate;
   var plot_canvas = document.getElementById("zoneCanvas");
   var plot_context = plot_canvas.getContext("2d");

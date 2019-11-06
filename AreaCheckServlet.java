@@ -17,7 +17,6 @@ public class AreaCheckServlet extends HttpServlet {
         resp.setContentType("text/html; charset=UTF-8");
         req.setCharacterEncoding("UTF-8");
         ServletContext context = getServletContext();
-
         PrintWriter out = resp.getWriter();
         RequestParser parser = new RequestParser(req);
         double x,y,r;
@@ -25,7 +24,9 @@ public class AreaCheckServlet extends HttpServlet {
         x = parser.getX();
         y = parser.getY();
         r = parser.getR();
-        if (inside(x,y,r)) result = "Попал"; else result = "Не попал";
+        if (inside(x, y, r)) result = "Попал";
+        else if (x<-5 || x>3 || y<-5 || y>3) result = "Не в ОДЗ";
+        else result = "Не попал";
         context.setAttribute("result", "<tr><td>" + x + "</td><td>" + y + "</td><td>" + r + "</td><td>" + result + "</td></tr><br>");
         out.println(context.getAttribute("result"));
     }
@@ -46,7 +47,7 @@ class RequestParser{
 
     public double getX() throws NumberFormatException{
         double doubleX =  Double.parseDouble(request.getParameter("x"));
-        if(doubleX >= -5.0 &&doubleX <= 3.0)
+        if(doubleX >= -6.0 &&doubleX <= 6.0)
             return doubleX;
         throw new NumberFormatException();
     }
@@ -62,7 +63,7 @@ class RequestParser{
 
     public double getY() throws NumberFormatException{
         double doubleY = Double.parseDouble(request.getParameter("y"));
-        if (doubleY >= -5.0 && doubleY <= 3.0)
+        if (doubleY >= -6.0 && doubleY <= 6.0)
             return doubleY;
 
         throw new NumberFormatException();

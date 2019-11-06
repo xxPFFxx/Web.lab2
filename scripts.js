@@ -79,14 +79,10 @@ function validate() {
     }
     else {
         document.getElementById("error").textContent = "";
-        sendAjax();
+        sendAjaxButton();
         return true;}
 }
-function sendAjax() {
-    let request = new ajaxRequest();
-    let ajaxY = document.getElementById("posy").value;
-    let ajaxX = document.getElementById("hiddenx").value;
-    let ajaxR = document.getElementById("hiddenr").value;
+function sendAjax(request, ajaxX, ajaxY, ajaxR, graph) {
     request.open("GET", "control?y=" + ajaxY + "&x=" + ajaxX + "&r=" + ajaxR, true);
     request.onreadystatechange = function()
     {
@@ -106,6 +102,22 @@ function sendAjax() {
     }
     request.send(null)
 }
+function sendAjaxButton() {
+    let request = new ajaxRequest();
+    let ajaxY = document.getElementById("posy").value;
+    let ajaxX = document.getElementById("hiddenx").value;
+    let ajaxR = document.getElementById("hiddenr").value;
+    let graph = 0;
+    sendAjax(request, ajaxX, ajaxY, ajaxR, graph);
+}
+    function sendAjaxGraph(x,y,r) {
+        let request = new ajaxRequest();
+        let ajaxY = y;
+        let ajaxX = x;
+        let ajaxR = r;
+        let graph = 1;
+        sendAjax(request, ajaxX, ajaxY, ajaxR, graph);
+    }
 function checkY() {
     var y = document.querySelector("input[type=text]").value.replace(/,/, ".");
     var test = /[^\d-,.]/.test(y);
