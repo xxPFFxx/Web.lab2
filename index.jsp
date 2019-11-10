@@ -61,6 +61,7 @@
       const y = Number(((e.y - document.getElementById("zoneCanvas").getBoundingClientRect().top - 180) / (-30)).toFixed(2));
       sendAjaxGraph(x,y,document.getElementById("hiddenr").value);
       document.getElementById("error").textContent = "";
+      drawPoint(document.getElementById("hiddenr"), x, y, "#000000")
     }
     else {
       document.getElementById("error").textContent = "Для отправки точки с картинки установите корректный радиус";
@@ -192,6 +193,14 @@
     plot_context.fillText("-3", 170, 275);
     plot_context.fillText("-4", 170, 305);
     plot_context.fillText("-5", 170, 335);
+  }
+  function drawPoint(r,x,y,color) {
+    plot_context.beginPath();
+    plot_context.fillStyle = color;
+    plot_context.arc(x*180/6 + 180, y*(-180)/6 + 180,3,0,2*3.14);
+    plot_context.fill();
+    plot_context.closePath();
+
   }
 </script>
 </body>
