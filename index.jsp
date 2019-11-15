@@ -8,7 +8,6 @@
   <link rel="stylesheet" type="text/css" href="resources/css/styles.css">
   <script src="resources/js/scripts.js"></script>
 </head>
-<>
 
 <div class="header block">
   <span class="header"> Демичев Даниил Дмитриевич<br> Группа P3213 <br> Вариант: 213100</span>
@@ -21,7 +20,7 @@
 <div class=" result_data" id="result_data"><table><tr><th>X</th><th>Y</th><th>R</th><th>Результат</th></tr></table></div>
 </div>
 <div class="block input">
-  <form method="get">
+  <form method="get" onsubmit="return validate()">
     Выберите X:
     <button class="buttonx" type="button" value="-5" onclick="buttonParsing(this, 'x')">-5</button>
     <button class="buttonx" type="button" value="-4" onclick="buttonParsing(this, 'x')">-4</button>
@@ -55,13 +54,13 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
+  let points = [];
   document.getElementById("zoneCanvas").addEventListener("click", function (e) {
     if(validateR()) {
       const x = Number(((e.x - document.getElementById("zoneCanvas").getBoundingClientRect().left - 180) / (30)).toFixed(2));
       const y = Number(((e.y - document.getElementById("zoneCanvas").getBoundingClientRect().top - 180) / (-30)).toFixed(2));
-      sendAjaxGraph(x,y,document.getElementById("hiddenr").value);
+      let result = sendAjaxGraph(x,y,document.getElementById("hiddenr").value);
       document.getElementById("error").textContent = "";
-      drawPoint(document.getElementById("hiddenr"), x, y, "#000000")
     }
     else {
       document.getElementById("error").textContent = "Для отправки точки с картинки установите корректный радиус";
@@ -194,7 +193,7 @@
     plot_context.fillText("-4", 170, 305);
     plot_context.fillText("-5", 170, 335);
   }
-  function drawPoint(r,x,y,color) {
+  function drawPoint(x,y,r,color) {
     plot_context.beginPath();
     plot_context.fillStyle = color;
     plot_context.arc(x*180/6 + 180, y*(-180)/6 + 180,3,0,2*3.14);
