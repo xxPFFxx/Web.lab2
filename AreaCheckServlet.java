@@ -19,21 +19,53 @@ public class AreaCheckServlet extends HttpServlet {
         ServletContext context = getServletContext();
         PrintWriter out = resp.getWriter();
         RequestParser parser = new RequestParser(req);
+        ArrayList<Points> points = (ArrayList<Points>) context.getAttribute("points");
+        if(points == null) points = new ArrayList<Points>();
         double x,y,r;
         String result;
-        x = parser.getX();
-        y = parser.getY();
-        r = parser.getR();
-        if (inside(x, y, r)) result = "Попал";
-        else if (x<-5 || x>3 || y<-5 || y>3) result = "Не в ОДЗ";
-        else result = "Не попал";
-        context.setAttribute("result", "<tr><td>" + x + "</td><td>" + y + "</td><td>" + r + "</td><td>" + result + "</td></tr><br>");
-        out.println(context.getAttribute("result"));
+        String answer = null;
+        if (req.getParameter("getPoints")!=null){
+            for (Points point: points){
+                answer += point.x.toString() + " " + point.y.toString() + ";";
+            }
+            out.println(answer);
+        }
+        else {
+            x = parser.getX();
+            y = parser.getY();
+            r = parser.getR();
+            if (inside(x, y, r)) result = "Попал";
+            else if (x<-5 || x>3 || y<-5 || y>3) result = "Не в ОДЗ";
+            else result = "Не попал";
+            if (result == "Попал"){
+                Points point = new Points(x,y,r,true);
+                points.add(point);
+            }
+            else {
+                Points point = new Points(x,y,r,false);
+                points.add(point);
+            }
+            context.setAttribute("points", points);
+            out.println("<tr><td>" + x + "</td><td>" + y + "</td><td>" + r + "</td><td>" + result + "</td></tr><br>");
+        }
+
     }
     public static boolean inside(double x, double y, double r){
         return x<=0 && y>=0 && x*x+y*y<=r*r  ||
                 x>=0 && y>=0 && y <= r/2-x ||
                 x<=0 && y<=0 && y>=-r && x >= -r;
+    }
+}
+class Points{
+    Double x;
+    Double y;
+    Double r;
+    Boolean result;
+    Points(Double x, Double y, Double r, Boolean res){
+        this.x = x;
+        this.y = y;
+        this.r = r;
+        this.result = res;
     }
 }
 class RequestParser{

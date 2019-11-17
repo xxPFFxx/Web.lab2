@@ -32,23 +32,23 @@
         button.classList.add('chosen');
         if (par == 'r' && validateR()){
             redraw();
-        }
-        for (let i = 0; i < points.length; i++) {
-            let x = points[i][0];
-            let y = points[i][1];
-            let r = button.value;
-            let color = "#000000";
-            if (x<=0 && y>=0 && x*x+y*y<=r*r  ||
-            x>=0 && y>=0 && y <= r/2-x ||
-            x<=0 && y<=0 && y>=-r && x >= -r){
-                color = "#00ff00";
+            for (let i = 0; i < points.length; i++) {
+                let x = points[i][0];
+                let y = points[i][1];
+                let r = button.value;
+                let color = "#000000";
+                if (x<=0 && y>=0 && x*x+y*y<=r*r  ||
+                    x>=0 && y>=0 && y <= r/2-x ||
+                    x<=0 && y<=0 && y>=-r && x >= -r){
+                    color = "#00ff00";
+                }
+                else {
+                    color = "#ff0000";
+                }
+                drawPoint(points[i][0], points[i][1], color)
             }
-            else {
-                color = "#ff0000";
-            }
-            ;
-            drawPoint(points[i][0], points[i][1], points[i][2], color)
         }
+
     }
     function validateR() {
         let r = document.getElementById("hiddenr").value;
@@ -118,8 +118,40 @@ function sendAjax(request, ajaxX, ajaxY, ajaxR, graph) {
                     else {
                         color = "#ff0000";
                     }
-                    drawPoint(ajaxX, ajaxY, ajaxR, color);
+                    drawPoint(ajaxX, ajaxY, color);
                     points.push([ajaxX, ajaxY, ajaxR]);
+                }
+                else alert("Ошибка AJAX: Данные не получены ")
+            }
+            else alert( "Ошибка AJAX: " + this.statusText)
+        }
+    }
+    request.send(null)
+}
+function sendAjaxPoints() {
+    let request = new ajaxRequest();
+    request.open("GET", "control?getPoints=true", true);
+    request.onreadystatechange = function()
+    {
+        if (this.readyState == 4)
+        {
+            if (this.status == 200)
+            {
+                if (this.responseText != null)
+                {
+                    let getpoints = this.responseText.split(";");
+                    for (let i = 0; i<getpoints.length; i++){
+                        if (getpoints[i].length<2){
+                            continue;
+                        }
+                        if (getpoints[i].substring(0,4) == "null"){
+                            getpoints[i] = getpoints[i].substring(4);
+                        }
+                        let xandy = getpoints[i].split(" ");
+                        if (xandy[0]!=null && xandy[1]!=null){
+                            points.push([xandy[0],xandy[1]]);
+                        }
+                    }
                 }
                 else alert("Ошибка AJAX: Данные не получены ")
             }

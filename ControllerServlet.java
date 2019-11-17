@@ -14,7 +14,8 @@ public class ControllerServlet extends HttpServlet {
         boolean forAreaCheck = req.getParameter("x")!=null&&
                 req.getParameter("y")!=null&&
                 req.getParameter("r")!=null;
-        if(forAreaCheck){
+        boolean getPoints = req.getParameter("getPoints")!=null;
+        if(forAreaCheck || getPoints){
             req.getRequestDispatcher("/check").forward(req, resp);
         }else {
 
