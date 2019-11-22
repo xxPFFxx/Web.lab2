@@ -37,8 +37,8 @@
     <input id="posy" type="text"  placeholder="-5..3" name="y" >
     <br>
     Выберите R:
-    <button class="buttonr" type="button"  value="1" onclick="buttonParsing(this, 'r')">1</button>
-    <button class="buttonr" type="button"  value="2" onclick="buttonParsing(this, 'r')">2</button>
+    <button class="buttonr" type="button"  value="1" onclick="buttonParsing(this, 'r')" >1</button>
+    <button class="buttonr" type="button"  value="2" onclick="buttonParsing(this, 'r')" >2</button>
     <button class="buttonr" type="button" value="3" onclick="buttonParsing(this, 'r')">3</button>
     <button class="buttonr" type="button"  value="4" onclick="buttonParsing(this, 'r')">4</button>
     <button class="buttonr" type="button"  value="5" onclick="buttonParsing(this, 'r')">5</button>
@@ -56,6 +56,7 @@
 <script>
   let points = [];
   sendAjaxPoints();
+  setTimeout(setR,500);
   document.getElementById("zoneCanvas").addEventListener("click", function (e) {
     if(validateR()) {
       const x = Number(((e.x - document.getElementById("zoneCanvas").getBoundingClientRect().left - 180) / (30)).toFixed(2));

@@ -22,9 +22,19 @@ public class AreaCheckServlet extends HttpServlet {
         ArrayList<Points> points = (ArrayList<Points>) context.getAttribute("points");
         if(points == null) points = new ArrayList<Points>();
         double x,y,r;
+        double buttonr;
+        Double setR = (Double)context.getAttribute("buttonr");
+        if (setR == null) setR = 1.0;
         String result;
         String answer = null;
-        if (req.getParameter("getPoints")!=null){
+        if (req.getParameter("getr")!=null){
+            out.println(setR);
+        }
+        else if (req.getParameter("buttonr")!=null){
+            buttonr = Double.parseDouble(req.getParameter("buttonr"));
+            context.setAttribute("buttonr", buttonr);
+        }
+        else if (req.getParameter("getPoints")!=null){
             for (Points point: points){
                 answer += point.x.toString() + " " + point.y.toString() + ";";
             }
@@ -35,21 +45,21 @@ public class AreaCheckServlet extends HttpServlet {
             y = parser.getY();
             r = parser.getR();
             if (inside(x, y, r)) result = "Попал";
-            else if (x<-5 || x>3 || y<-5 || y>3) result = "Не в ОДЗ";
+            else if (x < -5 || x > 3 || y < -5 || y > 3) result = "Не в ОДЗ";
             else result = "Не попал";
-            if (result == "Попал"){
-                Points point = new Points(x,y,r,true);
+            if (result == "Попал") {
+                Points point = new Points(x, y, r, true);
                 points.add(point);
-            }
-            else {
-                Points point = new Points(x,y,r,false);
+            } else {
+                Points point = new Points(x, y, r, false);
                 points.add(point);
             }
             context.setAttribute("points", points);
-            out.println("<tr><td>" + x + "</td><td>" + y + "</td><td>" + r + "</td><td>" + result + "</td></tr><br>");
+            out.println("<tr><td>" + x + "</td><td>" + y + "</td><td>" + r + "</td><td>" + result +  "n</td></tr><br>");
+        }
         }
 
-    }
+
     public static boolean inside(double x, double y, double r){
         return x<=0 && y>=0 && x*x+y*y<=r*r  ||
                 x>=0 && y>=0 && y <= r/2-x ||

@@ -47,7 +47,22 @@
                 }
                 drawPoint(points[i][0], points[i][1], color)
             }
+            let request = new ajaxRequest();
+            request.open("GET", "control?buttonr=" + button.value, true);
+            request.onreadystatechange = function()
+            {
+                if (this.readyState == 4)
+                {
+                    if (this.status == 200)
+                    {
+
+                    }
+                    else alert( "Ошибка AJAX: " + this.statusText)
+                }
+            }
+            request.send(null)
         }
+
 
     }
     function validateR() {
@@ -97,6 +112,124 @@ function validate() {
         document.getElementById("error").textContent = "";
         sendAjaxButton();
         return true;}
+}
+
+function setR() {
+    let request = new ajaxRequest();
+    request.open("GET", "control?getr=true" , true);
+    request.onreadystatechange = function() {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                if (this.responseText != null) {
+                    let getR = this.responseText;
+
+                    if (getR == 1.0) {
+
+                        document.querySelector('.buttonr[value="1"]').classList.add("chosen");
+                        document.getElementById("hiddenr").value = 1;
+                        redraw();
+                        for (let i = 0; i < points.length; i++) {
+                            let x = points[i][0];
+                            let y = points[i][1];
+                            let r = 1;
+                            let color = "#000000";
+                            if (x<=0 && y>=0 && x*x+y*y<=r*r  ||
+                                x>=0 && y>=0 && y <= r/2-x ||
+                                x<=0 && y<=0 && y>=-r && x >= -r){
+                                color = "#00ff00";
+                            }
+                            else {
+                                color = "#ff0000";
+                            }
+                            drawPoint(points[i][0], points[i][1], color)
+                        }
+                    }
+                    if (getR == 2.0) {
+                        document.querySelector('.buttonr[value="2"]').classList.add("chosen");
+                        document.getElementById("hiddenr").value = 2;
+                        redraw();
+                        for (let i = 0; i < points.length; i++) {
+                            let x = points[i][0];
+                            let y = points[i][1];
+                            let r = 2;
+                            let color = "#000000";
+                            if (x<=0 && y>=0 && x*x+y*y<=r*r  ||
+                                x>=0 && y>=0 && y <= r/2-x ||
+                                x<=0 && y<=0 && y>=-r && x >= -r){
+                                color = "#00ff00";
+                            }
+                            else {
+                                color = "#ff0000";
+                            }
+                            drawPoint(points[i][0], points[i][1], color)
+                        }
+                    }
+                    if (getR == 3.0) {
+                        document.querySelector('.buttonr[value="3"]').classList.add("chosen");
+                        document.getElementById("hiddenr").value = 3;
+                        redraw();
+                        for (let i = 0; i < points.length; i++) {
+                            let x = points[i][0];
+                            let y = points[i][1];
+                            let r = 3;
+                            let color = "#000000";
+                            if (x<=0 && y>=0 && x*x+y*y<=r*r  ||
+                                x>=0 && y>=0 && y <= r/2-x ||
+                                x<=0 && y<=0 && y>=-r && x >= -r){
+                                color = "#00ff00";
+                            }
+                            else {
+                                color = "#ff0000";
+                            }
+                            drawPoint(points[i][0], points[i][1], color)
+                        }
+                    }
+                    if (getR == 4.0) {
+                        document.querySelector('.buttonr[value="4"]').classList.add("chosen");
+                        document.getElementById("hiddenr").value = 4;
+                        redraw();
+                        for (let i = 0; i < points.length; i++) {
+                            let x = points[i][0];
+                            let y = points[i][1];
+                            let r = 4;
+                            let color = "#000000";
+                            if (x<=0 && y>=0 && x*x+y*y<=r*r  ||
+                                x>=0 && y>=0 && y <= r/2-x ||
+                                x<=0 && y<=0 && y>=-r && x >= -r){
+                                color = "#00ff00";
+                            }
+                            else {
+                                color = "#ff0000";
+                            }
+                            drawPoint(points[i][0], points[i][1], color)
+                        }
+                    }
+                    if (getR == 5.0) {
+                        document.querySelector('.buttonr[value="5"]').classList.add("chosen");
+                        document.getElementById("hiddenr").value = 5;
+                        redraw();
+                        for (let i = 0; i < points.length; i++) {
+                            let x = points[i][0];
+                            let y = points[i][1];
+                            let r = 5;
+                            let color = "#000000";
+                            if (x<=0 && y>=0 && x*x+y*y<=r*r  ||
+                                x>=0 && y>=0 && y <= r/2-x ||
+                                x<=0 && y<=0 && y>=-r && x >= -r){
+                                color = "#00ff00";
+                            }
+                            else {
+                                color = "#ff0000";
+                            }
+                            drawPoint(points[i][0], points[i][1], color)
+                        }
+                    }
+                } else alert("Ошибка AJAX: Данные не получены ")
+                } else alert("Ошибка AJAX: " + this.statusText)
+            }
+    }
+    request.send(null)
+
 }
 function sendAjax(request, ajaxX, ajaxY, ajaxR, graph) {
     request.open("GET", "control?y=" + ajaxY + "&x=" + ajaxX + "&r=" + ajaxR, true);
